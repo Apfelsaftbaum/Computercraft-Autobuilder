@@ -17,6 +17,7 @@ local x,y,z = 1,1,1
 local xa
 local ya
 local za
+local buildtype
 
 
 function check1()
@@ -658,13 +659,151 @@ end
 
 --Other functions
 --Multibuild
+
 function multibuild()
-	
+	if buildtype = "fusion_air_fuel" then
+
+	end
+	if buildtype = "waterpump" then
+		term.clear()
+		print(" ")
+		print(" ")
+	    print(" ")
+		print(" ")
+	    print(" ")
+	    print(" ")
+		print(" ")
+	    print(" ")
+	    print(" ")
+	    print("Bitte 2 Kisten in Slot 1 legen")
+	    print(" ")
+	    print(" ")
+	    write("[Weiter]")
+	    local event, button, x, y = os.pullEvent("mouse_click")
+	    
+	    build(1,1,1,2)
+	    build(1,2,1,2)
+		local function coordinates
+			local function input
+					term.clear()
+					print("Gebäude/Maschinen Menü")
+					print(" ")
+				    print("Maschinen:")
+					print("------ ")
+				    print("[Thermal Evaporation Plant]")
+				    print("--")
+					print("[Turbine]")
+				    print("--")
+				    print("[Fusionsreaktor luftgekühlt]")
+				    print("-- ")
+				    print(" ")
+				    print(" ")
+				    local pumpx = read()
+				    term.clear()
+					print("Gebäude/Maschinen Menü")
+					print(" ")
+				    print("Maschinen:")
+					print("------ ")
+				    print("[Thermal Evaporation Plant]")
+				    print("--")
+					print("[Turbine]")
+				    print("--")
+				    print("[Fusionsreaktor luftgekühlt]")
+				    print("-- ")
+				    print(" ")
+				    print(" ")
+				    local pumpy = read()
+			end
+		end
+	end
 end
 
 
---Coordinte System
+--Coordinte System v2 jetzt mit Minuswerten
 function move(x1,y1,z1)
+	if x1 > x then
+		xa = x1 - (x)
+		left(1)
+		forward(xa)
+		right(1)
+	elseif x1 < x then
+		xa = x - (x1)
+		if xa < 0 then
+			xa = xa * (-1)
+		end
+		right(1)
+		forward(xa)
+		left(1)
+	end
+	x = x1
+	if y1 > y then
+		ya = y1 - (y)
+		forward(ya)	
+	elseif y1 < y then
+		ya = y - (y1)
+		if ya < 0 then
+			ya = ya * (-1)
+		end
+		back(ya)
+	end
+	y = y1
+	if z1 > z then
+		za = z1 - (z)
+		up(za)
+	elseif z1 < z then
+		za = z - (z1)
+		if za < 0 then
+			za = za * (-1)
+		end
+		down(za)
+	end
+	z = z1
+end
+
+
+function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this later
+	if x2 > x then
+		xa = x2 - (x)
+		left(1)
+		forward(xa)
+		right(1)
+	elseif x2 < x then
+		xa = x - (x2)
+		if xa < 0 then
+			xa = xa * (-1)
+		end
+		right(1)
+		forward(xa)
+		left(1)
+	end
+	x = x2
+	if y2 > y then
+		ya = y2 - (y)	
+		forward(ya)		
+	elseif y2 < y then
+		ya = y - (y2)
+		if ya < 0 then
+			ya = ya * (-1)
+		end	
+		back(ya)	
+	end
+	y = y2
+	if z2 > z then
+		za = z2 - (z)		
+		up(za)
+	elseif z2 < z then
+		za = z - (z2)
+		if za < 0 then
+			za = za * (-1)
+		end	
+		down(za)
+	end
+	z = z2
+	turtle.select(slot)
+	placedown()
+end
+
+function buildto (slot,x1,y1,z1,x2,y2,z2) --Immer nur eine Achse eingeben !!
 	if x1 > x then
 		xa = x1 - x
 		if xa > 0 then
@@ -697,43 +836,11 @@ function move(x1,y1,z1)
 		down(za)
 	end
 	z = z1
-end
+	--Differenz ausrechen
+	--for schleife mit der Differenz als Wert
+	if x2 > x1 then
 
-function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this later
-	if x2 > x then
-		xa = x2 - x
-		if xa > 0 then
-			left(1)
-			forward(xa)
-			right(1)
-		end
-	elseif x2 < x then
-		xa = x - x2
-		if xa > 0 then
-			right(1)
-			forward(xa)
-			left(1)
-		end
-	end
-	x = x2
-	if y2 > y then
-		ya = y2 - y	
-		forward(ya)		
-	elseif y2 < y then
-		ya = y - y2	
-		back(ya)	
-	end
-	y = y2
-	if z2 > z then
-		za = z2 - z		
-		up(za)
-	elseif z2 < z then
-		za = z - z2	
-		down(za)
-	end
-	z = z2
-	turtle.select(slot)
-	placedown()
+
 end
 
 function placedown()
