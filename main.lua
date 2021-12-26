@@ -680,46 +680,20 @@ function multibuild()
 	    print(" ")
 	    write("[Weiter]")
 	    local event, button, x, y = os.pullEvent("mouse_click")
-	    
-	    build(1,1,1,2)
-	    build(1,2,1,2)
-		local function coordinates
-			local function input
-					term.clear()
-					print("Gebäude/Maschinen Menü")
-					print(" ")
-				    print("Maschinen:")
-					print("------ ")
-				    print("[Thermal Evaporation Plant]")
-				    print("--")
-					print("[Turbine]")
-				    print("--")
-				    print("[Fusionsreaktor luftgekühlt]")
-				    print("-- ")
-				    print(" ")
-				    print(" ")
-				    local pumpx = read()
-				    term.clear()
-					print("Gebäude/Maschinen Menü")
-					print(" ")
-				    print("Maschinen:")
-					print("------ ")
-				    print("[Thermal Evaporation Plant]")
-				    print("--")
-					print("[Turbine]")
-				    print("--")
-				    print("[Fusionsreaktor luftgekühlt]")
-				    print("-- ")
-				    print(" ")
-				    print(" ")
-				    local pumpy = read()
+		local function waterpumpclick()
+			if button == 1 and y == 13 and x < 9 then
+				placeholder()
+			else
+				waterpumpclick()
 			end
 		end
+		    --build(1,1,1,2)
+		    --build(1,2,1,2)
 	end
 end
 
 
---Coordinte System v2 jetzt mit Minuswerten
+--Koordinaten System v2 jetzt mit Minuswerten
 function move(x1,y1,z1)
 	if x1 > x then
 		xa = x1 - (x)
@@ -803,44 +777,118 @@ function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this la
 	placedown()
 end
 
-function buildto (slot,x1,y1,z1,x2,y2,z2) --Immer nur eine Achse eingeben !!
+function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben also zb. von 0,0,0 zu 0,0,10 !!Immer einen Block höher angeben!!
+	--Als erstes zu gegebenen Koordinaten gehen x1,y1,z1
 	if x1 > x then
-		xa = x1 - x
-		if xa > 0 then
-			left(1)
-			forward(xa)
-			right(1)
-		end
+		xa = x1 - (x)
+		left(1)
+		forward(xa)
+		right(1)
 	elseif x1 < x then
-		xa = x - x1
-		if xa > 0 then
-			right(1)
-			forward(xa)
-			left(1)
+		xa = x - (x1)
+		if xa < 0 then
+			xa = xa * (-1)
 		end
+		right(1)
+		forward(xa)
+		left(1)
 	end
 	x = x1
 	if y1 > y then
-		ya = y1 - y
+		ya = y1 - (y)
 		forward(ya)	
 	elseif y1 < y then
-		ya = y - y1	
+		ya = y - (y1)
+		if ya < 0 then
+			ya = ya * (-1)
+		end
 		back(ya)
 	end
 	y = y1
 	if z1 > z then
-		za = z1 - z
+		za = z1 - (z)
 		up(za)
 	elseif z1 < z then
-		za = z - z1
+		za = z - (z1)
+		if za < 0 then
+			za = za * (-1)
+		end
 		down(za)
 	end
 	z = z1
-	--Differenz ausrechen
-	--for schleife mit der Differenz als Wert
-	if x2 > x1 then
+	turtle.select(slot)
+	placedown(1)
+	--Von den ersten Koordinaten zu den Zielkoordinaten eine Linie ziehen
+	if x2 ~= x then
+		if x2 > x then
+			xa = x2 - (x)
+			for a = 1,xa do
+				left(1)
+				forward(1)
+				right(1)
+				placedown(1)
+			end
+		elseif x2 < x then
+			xa = x - (x2)
+			if xa < 0 then
+				xa = xa * (-1)
+			end
+			for a = 1,xa do
+				right(1)
+				forward(xa)
+				left(1)
+				placedown(1)
+			end
+		end
+	x = x2
+	end
+	if y2 ~= y then
+		if y2 > y then
+			ya = y2 - (y)
+			for a = 1,ya do
+				forward(ya)
+				placedown(1)
+			end
+		elseif y2 < y then
+			ya = y - (y2)
+			if ya < 0 then
+				ya = ya * (-1)
+			end	
+			for a = 1,ya do
+				back(ya)
+				placedown(1)
+			end
+		end
+		y = y2
+	end
+	if z2 ~= z then
+		if z2 > z then
+			za = z2 - (z)
+			for a = 1,za do	
+				up(za)
+				placedown(1)
+			end
+		elseif z2 < z then
+			za = z - (z2)
+			if za < 0 then
+				za = za * (-1)
+			end
+			for a = 1,za do
+				down(za)
+				check1()
+				turtle.placeUp()
+			end
+		end
+		z = z2 - 1
+	end
+end
 
+function dig(x,y,z)
+	-- body
+end
 
+function digfromto(x1,y1,z1,x2,y2,z2)
+	-- body
 end
 
 function placedown()
