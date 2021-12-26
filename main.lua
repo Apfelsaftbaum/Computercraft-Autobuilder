@@ -777,7 +777,9 @@ function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this la
 	placedown()
 end
 
-function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben also zb. von 0,0,0 zu 0,0,10 !!Immer einen Block höher angeben!!
+function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben also zb. von 0,0,0 zu 0,0,10 !!Immer einen Block höher angeben, es sei denn die Turtle soll nach unten bauen
+	--dann müssen die koordinaten genau angegeben werden!! 
+
 	--Als erstes zu gegebenen Koordinaten gehen x1,y1,z1
 	if x1 > x then
 		xa = x1 - (x)
@@ -883,7 +885,48 @@ function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben a
 	end
 end
 
-function dig(x,y,z)
+function digdown(x1,y1,z1)--Turtle gräbt immer unter sich!
+	if x1 > x then
+		xa = x1 - (x)
+		left(1)
+		forward(xa)
+		right(1)
+	elseif x1 < x then
+		xa = x - (x1)
+		if xa < 0 then
+			xa = xa * (-1)
+		end
+		right(1)
+		forward(xa)
+		left(1)
+	end
+	x = x1
+	if y1 > y then
+		ya = y1 - (y)
+		forward(ya)	
+	elseif y1 < y then
+		ya = y - (y1)
+		if ya < 0 then
+			ya = ya * (-1)
+		end
+		back(ya)
+	end
+	y = y1
+	if z1 > z then
+		za = z1 - (z)
+		up(za)
+	elseif z1 < z then
+		za = z - (z1)
+		if za < 0 then
+			za = za * (-1)
+		end
+		down(za)
+	end
+	z = z1
+	turtle.digDown()
+end
+
+function digfront( ... )
 	-- body
 end
 
