@@ -31,7 +31,7 @@ end
 --CHECK ITEMCOUNT
 
 --to do:
---mabe do a splitted Check in 2 functions and check the itemtags or ids + ammount
+--maybe do a splitted Check in 2 functions and check the itemtags or ids + ammount
 --add it to calculator
 function itemtest()
 		term.clear()
