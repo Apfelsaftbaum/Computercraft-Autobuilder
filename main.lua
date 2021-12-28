@@ -1,5 +1,3 @@
---[[This is a building programm v1.0]]--
---[[To do: more structures(maybe grouped by mods in a seperate window), add multistructures, add variables and functions to sum up code or speed up programming, cleaner and organized ui(maybe with fancy clickeffects and/or colors \o/),load external lua as addon, be creative]]--
 local inputmenue
 local itemcount
 local slot = 1
@@ -735,7 +733,7 @@ function move(x1,y1,z1)
 end
 
 
-function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this later
+function build(slot,x2,y2,z2) --always needs to be one higher
 	if x2 > x then
 		xa = x2 - (x)
 		left(1)
@@ -776,6 +774,7 @@ function build(slot,x2,y2,z2) --always needs to be one higher; maybe fix this la
 	turtle.select(slot)
 	placedown()
 end
+
 
 function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben also zb. von 0,0,0 zu 0,0,10 !!Immer einen Block höher angeben, es sei denn die Turtle soll nach unten bauen
 	--dann müssen die koordinaten genau angegeben werden!! 
@@ -820,6 +819,7 @@ function buildfromto (slot,x1,y1,z1,x2,y2,z2) --Immmer nur eine Achse eingeben a
 	z = z1
 	turtle.select(slot)
 	placedown(1)
+
 	--Von den ersten Koordinaten zu den Zielkoordinaten eine Linie ziehen
 	if x2 ~= x then
 		if x2 > x then
@@ -1050,6 +1050,7 @@ function buildmenueclick2()
 		buildmenueclick2()
 	end
 end
+
 --Tools
 function tools()
 	term.clear()
